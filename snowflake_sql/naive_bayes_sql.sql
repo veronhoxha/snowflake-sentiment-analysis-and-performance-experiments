@@ -1,3 +1,8 @@
+-- setup of the database and warehosue
+CREATE DATABASE IF NOT EXISTS COYOTE_DB;
+USE DATABASE COYOTE_DB;
+USE WAREHOUSE COYOTE_WH_L;
+
 -- dropping up any existing table and view to start fresh
 DROP TABLE IF EXISTS stopwords;
 DROP TABLE IF EXISTS training_data;
@@ -27,7 +32,7 @@ INSERT INTO stopwords(word) VALUES
 ('we'), ('he'), ('she'), ('her'), ('his'), ('them'), ('their'), ('our'), ('i'),
 ('me'), ('my'), ('your'), ('yours'), ('ours'), ('ourselves'), ('yourselves');
 
--- clean_text function to remove stopwords and perform stemming
+-- clean_text function to remove stopwords and perform stemming (I remeber that removing stopwords was not needed but I was experimenting around)
 CREATE OR REPLACE FUNCTION clean_text("input_text" STRING)
 RETURNS ARRAY
 LANGUAGE JAVASCRIPT
@@ -37,7 +42,7 @@ $$
     if (input_text === null) return [];
     
     // removing special characters and converting to lowercase
-    let cleaned = input_text.replace(/[^a-zA-Z0-9 ,.?! \s]/ig, ' ').toLowerCase();
+    let cleaned = input_text.replace(/[^a-zA-Z0-9 ,.?!\s]/g, ' ').toLowerCase();
     
     // splitting into words
     let words = cleaned.split(/\s+/);
@@ -67,14 +72,12 @@ CREATE OR REPLACE TABLE training_data AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY NULL) AS doc_id,
     CASE 
-        WHEN val:"label"::INT IN (0, 1) THEN 0  -- negative sentiment
-        WHEN val:"label"::INT IN (3, 4) THEN 1  -- positive sentiment
-        ELSE NULL  -- excluding neutral reviews (label 2)
+        WHEN val:"label"::INT IN (0) THEN 0  -- negative sentiment (label 0 stands for 1 stars the lowest possible)
+        WHEN val:"label"::INT IN (4) THEN 1  -- positive sentiment (label 4 stands for 5 stars given the highest one possible)
     END AS label,
     clean_text(val:"text") AS words_array
 FROM yelp_training
-WHERE val:"label"::INT != 2  -- excluding neutral reviews
-    AND val:"text" IS NOT NULL;
+WHERE val:"text" IS NOT NULL AND val:"label"::INT IN (0, 4);
 
 -- tokenizing training data and clipping counts at 1 using the distinct keyword
 CREATE OR REPLACE TABLE training_words_binary AS
@@ -143,16 +146,14 @@ CREATE OR REPLACE TABLE test_data AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY NULL) AS doc_id,
     CASE 
-        WHEN val:"label"::INT IN (0, 1) THEN 0  -- negative sentiment
-        WHEN val:"label"::INT IN (3, 4) THEN 1  -- positive sentiment
-        ELSE NULL  -- excluding neutral reviews (label 2)
+        WHEN val:"label"::INT IN (0) THEN 0  -- negative sentiment (label 0 stands for 1 stars the lowest possible)
+        WHEN val:"label"::INT IN (4) THEN 1  -- positive sentiment (label 4 stands for 5 stars given the highest one possible)
     END AS true_label,
     clean_text(val:"text") AS words_array
 FROM yelp_testing
-WHERE val:"label"::INT != 2 -- excluding neutral reviews (label 2)
-    AND val:"text" IS NOT NULL;
+WHERE val:"text" IS NOT NULL AND val:"label"::INT IN (0, 4);
 
--- tokenizing test Data and clipping counts at 1 using the distinct keyword
+-- tokenizing test data and clipping counts at 1 using the distinct keyword
 CREATE OR REPLACE TABLE test_words_binary AS
 SELECT DISTINCT
     doc_id,
@@ -212,11 +213,6 @@ FROM (
 JOIN test_data td ON ranked.doc_id = td.doc_id
 WHERE rank = 1;
 
--- evaluating precision
-SELECT
-    SUM(CASE WHEN predicted_label = true_label THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS precision_percentage
-FROM final_predictions;
-
 -- precision per label
 CREATE OR REPLACE VIEW precision_per_label AS
 SELECT
@@ -230,7 +226,7 @@ GROUP BY predicted_label
 ORDER BY precision_percentage DESC;
 
 -- precision per label
-SELECT * FROM precision_per_label;
+-- SELECT * FROM precision_per_label;
 
 -- calculating overall precision
 SELECT
