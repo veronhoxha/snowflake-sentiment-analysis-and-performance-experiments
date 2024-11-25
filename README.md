@@ -23,6 +23,7 @@ This repository hosts all the necessary resources for the Advanced Data Systems 
 
 ### Additional Folders
 - `"plots"`: Directory containing images and plots used in the report.
+- `"report"`: Directory containing the report of this assignment in PDF format.
 
 ## Installation
 Ensure Python 3.12.6 is installed (other versions may also work, but this version was used by my side). To run the Python code, first execute the following in your command line interface:
