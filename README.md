@@ -31,4 +31,4 @@ Ensure Python 3.12.6 is installed (other versions may also work, but this versio
 
 ## Usage
 To run the notebook `tpch_benchmark/tpch_benchmark.ipynb` and recreate results:
-1. Run the whole `tpch_benchmark.ipynb` notebook, ensuring to use your own “user” and “password” when connecting to Snowflake.
+1. Run the whole `tpch_benchmark.ipynb` notebook, ensuring to use your own ``“user”``, ``account`` and ``“password”`` when connecting to Snowflake (more details inside the notebook).
