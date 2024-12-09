@@ -54,13 +54,13 @@ requests==2.32.3
 rpds-py==0.21.0
 seaborn==0.13.2
 six==1.16.0
-snowflake-connector-python==3.12.2
+snowflake-connector-python==3.12.3
 snowflake_uuid==0.1.1
 sortedcontainers==2.4.0
 stack-data==0.6.3
 tenacity==9.0.0
 tomlkit==0.13.2
-tornado==6.4.1
+tornado==6.4.2
 traitlets==5.14.3
 typing_extensions==4.12.2
 tzdata==2024.2
