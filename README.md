@@ -26,8 +26,22 @@ This repository hosts all the necessary resources for the Advanced Data Systems 
 - `"report"`: Directory containing the report of this assignment in PDF format.
 
 ## Installation
-Ensure Python 3.12.6 is installed (other versions may also work, but this version was used by my side). To run the Python code, first execute the following in your command line interface:
-- `pip install -r requirements.txt`
+Prerequisites: Ensure Python 3.12.6 is installed on your machine. Other versions might work, but this project was developed with 3.12.6.
+
+**1. Create and Activate a Virtual Environment**
+
+Create a Virtual Environment in the root directory of this project by running the following commands:
+  - For macOS/Linux:
+      - ``python3 -m venv .venv``
+      - ``source .venv/bin/activate``
+  - For Windows:
+      - ``python -m venv .venv``
+      - ``.venv\Scripts\activate``
+
+**2. Install Required Packages**
+
+When the virtual environment is activated, install all necessary packages by running:
+  - `pip install -r requirements.txt`
 
 ## Usage
 To run the notebook `tpch_benchmark/tpch_benchmark.ipynb` and recreate results:
