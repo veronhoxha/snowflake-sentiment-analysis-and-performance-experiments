@@ -44,5 +44,12 @@ When the virtual environment is activated, install all necessary packages by run
   - `pip install -r requirements.txt`
 
 ## Usage
-To run the notebook `tpch_benchmark/tpch_benchmark.ipynb` and recreate results:
-1. Run the whole `tpch_benchmark.ipynb` notebook, ensuring to use your own ``“user”``, ``"account"`` and ``“password”`` when connecting to Snowflake (more details inside the notebook).
+**1. Running the TPCH Benchmark Notebook:**
+
+To recreate the results using the ``tpch_benchmark/tpch_benchmark.ipynb`` notebook:
+
+  - Run the whole `tpch_benchmark.ipynb` notebook, ensuring to use your own ``“user”``, ``"account"`` and ``“password”`` when connecting to Snowflake (more details inside the notebook).
+
+**2.	Executing Naive Bayes Implementations:**
+
+The Naive Bayes implementations, both in SQL and as a UDTF in Python, need to be executed within Snowflake.
