@@ -19,7 +19,7 @@ This repository hosts all the necessary resources for the Advanced Data Systems 
 - `snowflake_sql/naive_bayes_sql.sql`: Naive Bayes implementation in SQL.
 - `tpch_benchmark/tpch_benchmark.ipynb`: Jupyter notebook where Performance Experiments Using TPC-H are performed.
 - `tpch_benchmark/query_execution_times.csv`: Query execution times for all queries across all possible combinations.
-- `tpch_benchmark/average_query_execution_times.csv`: Average query execution times after three runs across all possible.combinations.
+- `tpch_benchmark/average_query_execution_times.csv`: Average query execution times after three runs across all possible combinations.
 
 **Note:** The training and test data from the Yelp Review dataset (https://huggingface.co/datasets/Yelp/yelp_review_full) were uploaded to Snowflake at the beginning of this project and are not available here on GitHub due to their size.
 
