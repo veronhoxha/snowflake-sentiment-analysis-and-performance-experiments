@@ -1,7 +1,7 @@
 # Mastering Snowflake: Sentiment Analysis and Performance Experiments
 
 ## Introduction
-This repository hosts all the necessary resources for the Advanced Data Systems ASSG1 ``"Mastering Snowflake: Sentiment Analysis and Performance Experiments"``.
+This repository hosts all the necessary resources for the Advanced Data Systems Project 1 titled  ``"Mastering Snowflake: Sentiment Analysis and Performance Experiments"``.
 
 ## Table of Contents
 - [Introduction](#introduction)
